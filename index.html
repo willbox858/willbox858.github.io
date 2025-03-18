@@ -11,16 +11,7 @@
             box-sizing: border-box;
         }
         
-        /* For styling purposes only - don't modify */
-        #pulseContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+        /* Removed pulse container styles */
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -32,16 +23,29 @@
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background canvas for particles */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         
         .container {
-            background-color: #2a2a2a;
+            background-color: rgba(42, 42, 42, 0.85);
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             padding: 40px;
             max-width: 600px;
             text-align: center;
             transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
         .container:hover {
@@ -71,36 +75,7 @@
             z-index: 2;
         }
         
-        .pulse {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            opacity: 0;
-            animation: single-pulse 3s ease-out forwards;
-        }
-        
-        .pulse:before {
-            content: '';
-            position: absolute;
-            border: 3px solid #e3b87d;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-        
-        @keyframes single-pulse {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            20% {
-                opacity: 0.8;
-            }
-            100% {
-                opacity: 0;
-                transform: scale(2);
-            }
-        }
+        /* Removed pulse animation styles */
         
         .signature {
             font-style: italic;
@@ -128,8 +103,8 @@
     </style>
 </head>
 <body>
+    <canvas id="particles-canvas"></canvas>
     <div class="container">
-        <div id="pulseContainer"></div>
         <h1>Thank you for checking my portfolio</h1>
         <p>We're still getting things set up here. Please check back soon to see my work and projects.</p>
         <div class="signature">- Coming Soon -</div>
@@ -137,59 +112,84 @@
     </div>
 
     <script>
-        // This script creates and positions a single random pulse animation at a time
-        // with random pauses between pulses for added visual interest
+        // Pulse animation has been removed
         const container = document.querySelector('.container');
-        const pulseContainer = document.getElementById('pulseContainer');
-        
-        // Variable to track if a pulse is currently active
-        let isPulseActive = false;
-        
-        // Function to get a random number between min and max (inclusive)
-        function getRandomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-        
-        // Function to create a new pulse at a random position
-        function createRandomPulse() {
-            // Only create a new pulse if there isn't one active
-            if (!isPulseActive) {
-                // Set flag to true - we now have an active pulse
-                isPulseActive = true;
-                
-                // Get container dimensions
-                const containerWidth = container.offsetWidth;
-                const containerHeight = container.offsetHeight;
-                
-                // Create a new pulse element
-                const pulse = document.createElement('div');
-                pulse.className = 'pulse';
-                
-                // Set random position within container (with some padding from edges)
-                const padding = 40;
-                const randomX = Math.floor(Math.random() * (containerWidth - padding*2)) + padding;
-                const randomY = Math.floor(Math.random() * (containerHeight - padding*2)) + padding;
-                
-                pulse.style.left = randomX + 'px';
-                pulse.style.top = randomY + 'px';
-                
-                // Add pulse to the container
-                pulseContainer.appendChild(pulse);
-                
-                // Remove the pulse after animation completes and reset the flag
-                setTimeout(() => {
-                    pulse.remove();
-                    isPulseActive = false;
-                    
-                    // Schedule the next pulse with a random pause between 350ms and 550ms
-                    const randomPause = getRandomNumber(350, 550);
-                    setTimeout(createRandomPulse, randomPause);
-                }, 3000);
+
+        // Background particles script
+        (function() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match window
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-        }
-        
-        // Start the first pulse
-        createRandomPulse();
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speed = Math.random() * 0.5 + 0.1;
+                    this.angle = Math.random() * 360;
+                    this.color = Math.random() > 0.85 ? 
+                                 'rgba(227, 184, 125, ' + (Math.random() * 0.35 + 0.1) + ')' : 
+                                 'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+                
+                update() {
+                    this.x += Math.cos(this.angle * Math.PI / 180) * this.speed;
+                    this.y += Math.sin(this.angle * Math.PI / 180) * this.speed;
+                    
+                    // Change angle slightly for meandering effect
+                    this.angle += Math.random() * 2 - 1;
+                    
+                    // Reset particles that move off-screen
+                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+                        this.reset();
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+            
+            // Create particles array
+            const particlesArray = [];
+            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive particle count
+            
+            for (let i = 0; i < particleCount; i++) {
+                particlesArray.push(new Particle());
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        })();
     </script>
 </body>
 </html>
