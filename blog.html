@@ -96,8 +96,70 @@
             margin-bottom: 40px;
             padding-bottom: 30px;
             border-bottom: 1px solid rgba(227, 184, 125, 0.3);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
         }
-        
+
+        /* Preview image container */
+        .post-preview-image {
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* Gold border around the image */
+        .preview-image-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #e3b87d;
+            border-radius: 50%;
+        }
+
+        /* Inner container for the image */
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            overflow: hidden;
+            background-color: #333333;
+        }
+
+        /* The actual image styling */
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content container */
+        .post-content {
+            flex-grow: 1;
+        }
+
+        /* Responsive layout for mobile */
+        @media (max-width: 600px) {
+            .blog-post {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .post-preview-image {
+                margin-bottom: 15px;
+            }
+            
+            .post-meta {
+                text-align: center;
+            }
+        }
+
         .blog-post:last-child {
             border-bottom: none;
         }
@@ -165,19 +227,24 @@
         </div>
         
         <div class="blog-post">
-            <h2><a href="blog-post1.html" style="color: inherit; text-decoration: none;">Implementing GOAP For AI Agents</a></h2>
-            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span>
-            <p>
-                GOAP is most widely known for it's use in the F.E.A.R series, where (when combined with clever level design and audio queues)
-                it became famous for having the "smartest AI in games." But, the interesting things about GOAP extends to outside the realm
-                of games. In here, we'll be discussing GOAP, Behavior Trees, what they do, why GOAP is so neat, and take a look at my GOAP 
-                implementation in Unity
-            </p>
-            <a href="blog-post1.html" class="read-more">Read More</a>
+            <div class="post-preview-image">
+                <div class="preview-image">
+                    <img src="images/goap-debug-demo.gif" alt="GOAP Debug Visualization">
+                </div>
+                <div class="preview-image-outline"></div>
+            </div>
+            <div class="post-content">
+                <h2><a href="blog-post1.html" style="color: inherit; text-decoration: none;">Implementing GOAP For AI Agents</a></h2>
+                <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span></div>
+                <p>
+                    GOAP is most widely known for it's use in the F.E.A.R series, where (when combined with clever level design and audio queues)
+                    it became famous for having the "smartest AI in games." But, the interesting things about GOAP extends to outside the realm
+                    of games. In here, we'll be discussing GOAP, Behavior Trees, what they do, why GOAP is so neat, and take a look at my GOAP 
+                    implementation in Unity
+                </p>
+                <a href="blog-post1.html" class="read-more">Read More</a>
+            </div>
         </div>
-        
-        <a href="index.html" class="back-link">← Back to Portfolio</a>
-    </div>
 
     <script>
         // Background particles script

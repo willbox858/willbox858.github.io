@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Implementing A* Pathfinding for Smarter Game AI</title>
+    <title>Implementing GOAP For AI Agents</title>
     <style>
         * {
             margin: 0;
@@ -141,6 +141,28 @@
             text-align: center;
         }
         
+        .gif-container {
+            margin: 30px 0;
+            text-align: center;
+            background-color: rgba(30, 30, 30, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #a98d6d;
+        }
+        
+        .gif-container img {
+            max-width: 100%;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .gif-caption {
+            font-style: italic;
+            color: #a98d6d;
+            font-size: 14px;
+            text-align: center;
+        }
+        
         .pseudocode {
             font-family: 'Courier New', Courier, monospace;
             padding: 15px;
@@ -178,64 +200,106 @@
                 <a href="blog.html" class="nav-link">Blog</a>
             </div>
             <h1>Implementing GOAP For AI Agents</h1>
-            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span></div>
+            <div class="post-meta">May 4, 2025 · 8 min read · <span class="tag">Game AI</span> <span class="tag">Debugging</span></div>
         </div>
         
         <p>
-            AI agents are the spice that bring many games to life. They provide a reactive challenge to players, forcing them to be adaptive and smart in how they pick fights. In the best case scenarios at least. At their worst, enemy AI can be boring and actually detract from a game's fun. So, how do we build fun, reactive, and intelligent AI for out games?
+            AI agents are the spice that bring many games to life. They provide a reactive challenge to players, forcing them to be adaptive and smart in how they pick fights. In the best case scenarios at least. At their worst, enemy AI can be boring and actually detract from a game's fun. So, how do we build fun, reactive, and intelligent AI for our games?
         </p>       
         
         <h2>What's a GOAP?</h2>
         
         <p>
-            GOAP is an acronym that stands for Goal Oriented Action Planning, and it's that last word that makes GOAP so interesting, even some 20 years after the technology was unvealed for the game F.E.A.R. 
+            GOAP is an acronym that stands for Goal Oriented Action Planning, and it's that last word that makes GOAP so interesting, even some 20 years after the technology was unveiled for the game F.E.A.R. 
         </p>
         
         <h2>Why is Planning Special?</h2>
         
         <p>
-            Unlike GOAP, most AI systems are actually incapable of forming plans. This is because they're built using what are known as "Behavior Trees." These systems utilize fixed connections between the actions an agent can perform in order to accomplish it's goals, these action / goal pairings are also called Behaviors. As an easy example, let's say we have an AI agent with a sword. When it sees the player, it will likely trigger it's "Attack_With_Melee" behavior, which tells the agent to run up to the player and hit them with their sword. Within a Behavior Tree, these are fixed. So, unless a different behavior is triggered, that exact sequence of actions is what the AI will do.
+            Unlike GOAP, most AI systems are actually incapable of forming plans. This is because they're built using what are known as "Behavior Trees." These systems utilize fixed connections between the actions an agent can perform in order to accomplish its goals, these action/goal pairings are also called Behaviors. As an easy example, let's say we have an AI agent with a sword. When it sees the player, it will likely trigger its "Attack_With_Melee" behavior, which tells the agent to run up to the player and hit them with their sword. Within a Behavior Tree, these are fixed. So, unless a different behavior is triggered, that exact sequence of actions is what the AI will do.
         </p>
 
         <h2>This is where Planning comes in.</h2>
         
         <p>
-            GOAP on the other hand, is capable of planning, and is actually one of a variety of AI systems known as "planning systems." When a GOAP agent decides to do something, it goes through several steps. First, it determines what it needs to do (it finds a goal). Then, the agent looks at what is supposed to happen when it reaches it's goal, and compares that against what things are like currently (it looks at the world-state, and compares it to the current world-state). Finally, the AI then looks over all the things it can do (actions), and builds a plan that uses it's actions to incrementally accomplish it's goal. Kind of like a person! What's really cool about this though, it that it means agents have totally free reign to accomplish it's goals, within the limits of the software obviously.
+            GOAP on the other hand, is capable of planning, and is actually one of a variety of AI systems known as "planning systems." When a GOAP agent decides to do something, it goes through several steps. First, it determines what it needs to do (it finds a goal). Then, the agent looks at what is supposed to happen when it reaches its goal, and compares that against what things are like currently (it looks at the world-state, and compares it to the current world-state). Finally, the AI then looks over all the things it can do (actions), and builds a plan that uses its actions to incrementally accomplish its goal. Kind of like a person! What's really cool about this though, is that it means agents have totally free reign to accomplish their goals, within the limits of the software obviously.
         </p>
 
         <h2>Oh yeah, this is also about A*</h2>
         <p>
-            One of the unique things about GOAP is that it actually understands Action as a navigable space that it "moves" through in order to build it's plans. Below is a snippet of code from my A* (A-Stars) implementation I made to use for GOAP specifically. This is what allows the system to be so flexible. A designer just has to give an agent a bunch of actions and goals, then the agent figures the rest out on it's own!
+            One of the unique things about GOAP is that it actually understands Action as a navigable space that it "moves" through in order to build its plans. Below is a snippet of code from my A* (A-Star) implementation I made to use for GOAP specifically. This is what allows the system to be so flexible. A designer just has to give an agent a bunch of actions and goals, then the agent figures the rest out on its own!
         </p>
 
-        <pre><code>
-            foreach (var action in availableActions)
-            {
-                if (!action.Effects.Any(unsatisfiedBeliefs.Contains))
-                {
-                    continue;
-                }
-                
-                var newRequiredEffects = new HashSet<Belief>(unsatisfiedBeliefs);
-                
-                newRequiredEffects.ExceptWith(action.Effects);
-                
-                newRequiredEffects.UnionWith(action.Preconditions);
-                
-                var newAvailableActions = new HashSet<Action>(availableActions);
-                newAvailableActions.Remove(action);
-                
-                var newNode = new Node(current, action, newRequiredEffects, current.Cost + action.Cost);
-                
-                openSet.Add(newNode);
-                
-                current.Leaves.Add(newNode);
-            }
-            </code></pre>
+        <pre><code>foreach (var action in availableActions)
+{
+    if (!action.Effects.Any(unsatisfiedBeliefs.Contains))
+    {
+        continue;
+    }
+    
+    var newRequiredEffects = new HashSet<Belief>(unsatisfiedBeliefs);
+    
+    newRequiredEffects.ExceptWith(action.Effects);
+    
+    newRequiredEffects.UnionWith(action.Preconditions);
+    
+    var newAvailableActions = new HashSet<Action>(availableActions);
+    newAvailableActions.Remove(action);
+    
+    var newNode = new Node(current, action, newRequiredEffects, current.Cost + action.Cost);
+    
+    openSet.Add(newNode);
+    
+    current.Leaves.Add(newNode);
+}</code></pre>
+
+        <h2>A* and GOAP: A Match Made in AI Heaven</h2>
+        
+        <p>
+            So what's actually happening in that code? Well, A* is typically used for pathfinding - you know, getting your character from point A to point B without running into walls. But in GOAP, we're using it to find a path through possible actions instead of physical space.
+        </p>
+        
+        <p>
+            Think of it like this: each action is a "node" in our search space. The "distance" between nodes is the cost of taking that action. And the "destination" is a world state where our goal is satisfied. A* helps us find the cheapest (most efficient) sequence of actions to reach our goal.
+        </p>
+        
+        <p>
+            What makes A* special is that it's both complete (it will find a solution if one exists) and optimal (it will find the best solution). It does this by using a heuristic function to estimate how close each potential action gets us to our goal. In GOAP, this heuristic is often just the number of unsatisfied conditions remaining.
+        </p>
+        
+        <p>
+            The code above is exploring each possible action, checking if it helps satisfy our goal, and then creating new nodes for the search to continue. It's building a tree of possible action sequences, and A* helps us navigate that tree efficiently.
+        </p>
+
+        <h2>But How Do We Know What's Going On?</h2>
+        
+        <p>
+            Here's the thing about GOAP - it's super powerful, but it can also be a total nightmare to debug. When your AI is doing something weird (and trust me, it will), how do you figure out what's going on in its digital brain? Is it choosing the wrong goal? Is it building a bad plan? Is it executing the plan incorrectly?
+        </p>
+        
+        <p>
+            This is where good debug tools become absolutely essential. Without them, you're basically flying blind, trying to guess why your carefully crafted AI is running in circles or staring at walls instead of doing something useful. Below is a simple debugger I made for my own GOAP implementation, and while it isn't much, something is way better than nothing when dealing with systems like this.
+        </p>
+        
+        <div class="gif-container">
+            <img src="images/goap-debug-demo.gif" alt="GOAP Agent with Debug UI">
+            <p class="gif-caption">GOAP agent navigating its environment with the debug UI showing its current goal, action, and beliefs. Notice how the beliefs change as the agent interacts with the world.</p>
+        </div>
+        
+        <p>
+            GOAP is a powerful AI system that gives your agents the ability to form dynamic plans to achieve their goals. By leveraging A* for plan generation and adding a robust debug UI, you can create intelligent, adaptable agents that are actually manageable to work with.
+        </p>
+        
+        <p>
+            The next time you're working on an AI system, remember that visibility into your agent's decision-making process is just as important as the intelligence of the system itself. Good debug tools don't just make development easier - they make it possible to create more complex and interesting AI behaviors.
+        </p>
+        
+        <p>
+            And isn't that what we all want? AI that surprises us, adapts to player actions, and creates those memorable gameplay moments that players will talk about long after they've put the game down.
+        </p>
         
         <div class="navigation-buttons">
             <a href="blog.html" class="back-link">← All Blog Posts</a>
-            <!--<a href="blog-post2.html" class="back-link">Next Post: Optimizing Entity Component Systems →</a>-->
         </div>
     </div>
 
