@@ -1,0 +1,354 @@
+/* Project Detail Page Styles */
+/* These styles would be added to your main styles.css file */
+
+/* Project Header */
+.project-detail {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.project-header {
+    margin-bottom: 40px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #555;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.back-link i {
+    margin-right: 8px;
+}
+
+.back-link:hover {
+    color: #0099ff;
+}
+
+.project-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tag.personal {
+    background-color: #e6f7ff;
+    color: #0099ff;
+}
+
+.tag.professional {
+    background-color: #e6f0ff;
+    color: #4d7cff;
+}
+
+.tag.tech {
+    background-color: #f0f0f0;
+    color: #444;
+}
+
+.project-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.project-date i {
+    margin-right: 6px;
+}
+
+/* Project Showcase */
+.project-showcase {
+    margin-bottom: 50px;
+}
+
+.project-gallery {
+    margin-bottom: 25px;
+}
+
+.featured-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.gallery-thumbs {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.gallery-thumbs img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-thumbs img:hover {
+    transform: scale(1.05);
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #444;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.project-link i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+.project-link:hover {
+    border-color: #0099ff;
+    color: #0099ff;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Project Content */
+.project-content {
+    margin-bottom: 50px;
+}
+
+.project-content section {
+    margin-bottom: 40px;
+}
+
+.project-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #222;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.project-overview p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+    color: #444;
+}
+
+/* Technical Details */
+.tech-section {
+    margin-bottom: 30px;
+}
+
+.tech-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.tech-section p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.tech-section ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.tech-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* Code Examples */
+.code-section {
+    margin-bottom: 30px;
+}
+
+.code-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.code-section pre {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+.code-section code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Project Results */
+.result-section {
+    margin-bottom: 25px;
+}
+
+.result-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.result-section ul {
+    padding-left: 20px;
+}
+
+.result-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* Project Learnings */
+.project-learnings ul {
+    padding-left: 20px;
+}
+
+.project-learnings li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.project-learnings strong {
+    color: #222;
+}
+
+/* Related Content */
+.related-content {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.related-content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #222;
+}
+
+.related-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.related-item {
+    flex: 1;
+    min-width: 250px;
+}
+
+.related-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.related-item ul {
+    padding-left: 20px;
+}
+
+.related-item li {
+    margin-bottom: 10px;
+}
+
+.related-item a {
+    color: #0099ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.related-item a:hover {
+    color: #0077cc;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .project-header h1 {
+        font-size: 2rem;
+    }
+    
+    .featured-image {
+        height: 350px;
+    }
+    
+    .project-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .related-items {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .featured-image {
+        height: 250px;
+    }
+    
+    .gallery-thumbs img {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .project-links {
+        flex-direction: column;
+    }
+    
+    .project-link {
+        width: 100%;
+    }
+    
+    .code-section pre {
+        padding: 15px 10px;
+        font-size: 0.8rem;
+    }
+}
