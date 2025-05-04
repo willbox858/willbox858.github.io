@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Coming Soon</title>
+    <title>My Game Dev Blog</title>
     <style>
         * {
             margin: 0;
@@ -15,14 +15,11 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-color: #1a1a1a;
             color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         
         /* Background canvas for particles */
@@ -40,14 +37,14 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             padding: 40px;
-            max-width: 600px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            max-width: 800px;
+            margin: 40px auto;
             backdrop-filter: blur(5px);
         }
         
-        .container:hover {
-            transform: translateY(-5px);
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
         }
         
         h1 {
@@ -56,50 +53,27 @@
             color: #e3b87d;
         }
         
-        p {
-            font-size: 18px;
-            color: #d0d0d0;
-            margin-bottom: 30px;
-        }
-        
-        .container {
-            position: relative;
-            overflow: hidden;
-            z-index: 0;
-        }
-        
-        h1, p, .signature {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .signature {
-            font-style: italic;
-            margin-top: 40px;
-            margin-bottom: 30px;
-            color: #a98d6d;
-        }
-        
-        .social-link {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #333333;
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
             color: #e3b87d;
-            text-decoration: none;
-            border-radius: 4px;
-            border: 1px solid #e3b87d;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            margin: 0 5px 10px 5px;
         }
         
-        .social-link:hover {
-            background-color: #e3b87d;
-            color: #2a2a2a;
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #d0d0d0;
+        }
+        
+        p {
+            font-size: 16px;
+            color: #d0d0d0;
+            margin-bottom: 20px;
         }
         
         /* Navigation styles */
         .nav {
+            text-align: center;
             margin-bottom: 30px;
         }
         
@@ -116,20 +90,113 @@
         .nav-link:hover, .nav-link.active {
             border-bottom: 2px solid #e3b87d;
         }
+        
+        /* Blog post styles */
+        .blog-post {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(227, 184, 125, 0.3);
+        }
+        
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+        
+        .post-meta {
+            font-size: 14px;
+            color: #a98d6d;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 3px 8px;
+            margin-right: 5px;
+            background-color: rgba(169, 141, 109, 0.2);
+            border: 1px solid #a98d6d;
+            border-radius: 4px;
+            color: #a98d6d;
+        }
+        
+        .read-more {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-top: 10px;
+            background-color: #333333;
+            color: #e3b87d;
+            text-decoration: none;
+            border-radius: 4px;
+            border: 1px solid #e3b87d;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .read-more:hover {
+            background-color: #e3b87d;
+            color: #2a2a2a;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #a98d6d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #e3b87d;
+        }
     </style>
 </head>
 <body>
     <canvas id="particles-canvas"></canvas>
+    
     <div class="container">
-        <div class="nav">
-            <a href="index.html" class="nav-link active">Home</a>
-            <a href="blog.html" class="nav-link">Blog</a>
+        <div class="header">
+            <div class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="blog.html" class="nav-link active">Blog</a>
+            </div>
+            <h1>My Game Development Blog</h1>
+            <p>Exploring game programming concepts, AI development, and technical insights</p>
         </div>
-        <h1>Thank you for checking my portfolio</h1>
-        <p>We're still getting things set up here. Please check back soon to see my work and projects.</p>
-        <div class="signature">- Coming Soon -</div>
-        <a href="https://www.linkedin.com/in/williambox92064/" class="social-link" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
-        <a href="blog.html" class="social-link">Check out my blog</a>
+        
+        <div class="blog-post">
+            <h2><a href="blog-post1.html" style="color: inherit; text-decoration: none;">Implementing A* Pathfinding for Smarter Game AI</a></h2>
+            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span> <span class="tag">Pathfinding</span></div>
+            <p>
+                Pathfinding is one of the core components of any game AI system. In this post, I'll walk through 
+                the implementation details of the A* algorithm, compare it with alternatives like 
+                Dijkstra's algorithm, and show how to optimize it for different terrain types.
+            </p>
+            <a href="blog-post1.html" class="read-more">Read More</a>
+        </div>
+        
+        <div class="blog-post">
+            <h2><a href="blog-post2.html" style="color: inherit; text-decoration: none;">Optimizing Entity Component Systems in Unity</a></h2>
+            <div class="post-meta">April 25, 2025 · 8 min read · <span class="tag">C#</span> <span class="tag">Unity</span> <span class="tag">Performance</span></div>
+            <p>
+                Entity Component Systems (ECS) provide a powerful pattern for game development, but they can 
+                be challenging to implement efficiently. This post explores how I optimized an ECS architecture 
+                in Unity, reducing CPU overhead by 35% and improving frame rates on mobile devices.
+            </p>
+            <a href="blog-post2.html" class="read-more">Read More</a>
+        </div>
+        
+        <div class="blog-post">
+            <h2><a href="blog-post3.html" style="color: inherit; text-decoration: none;">Creating Responsive Player Controls: Input Buffer Systems</a></h2>
+            <div class="post-meta">April 18, 2025 · 6 min read · <span class="tag">Game Feel</span> <span class="tag">C#</span> <span class="tag">Input Systems</span></div>
+            <p>
+                No matter how beautiful your game looks, poor controls will ruin the player experience. Here's how 
+                I implemented an input buffer system that makes controls feel responsive even under network lag or 
+                frame rate fluctuations.
+            </p>
+            <a href="blog-post3.html" class="read-more">Read More</a>
+        </div>
+        
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
     </div>
 
     <script>

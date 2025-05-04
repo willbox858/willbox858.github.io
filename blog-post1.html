@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementing A* Pathfinding for Smarter Game AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background canvas for particles */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            background-color: rgba(42, 42, 42, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            margin: 40px auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #e3b87d;
+        }
+        
+        h2 {
+            font-size: 22px;
+            margin: 30px 0 15px;
+            color: #e3b87d;
+        }
+        
+        h3 {
+            font-size: 18px;
+            margin: 25px 0 10px;
+            color: #d0d0d0;
+        }
+        
+        p {
+            font-size: 16px;
+            color: #d0d0d0;
+            margin-bottom: 20px;
+        }
+        
+        /* Navigation styles */
+        .nav {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .nav-link {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 5px;
+            color: #e3b87d;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            border-bottom: 2px solid #e3b87d;
+        }
+        
+        /* Blog post styles */
+        .post-meta {
+            font-size: 14px;
+            color: #a98d6d;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 3px 8px;
+            margin-right: 5px;
+            background-color: rgba(169, 141, 109, 0.2);
+            border: 1px solid #a98d6d;
+            border-radius: 4px;
+            color: #a98d6d;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #a98d6d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #e3b87d;
+        }
+        
+        pre {
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 3px solid #e3b87d;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #d4d4d4;
+        }
+        
+        .image-container {
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .pseudocode {
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            background-color: rgba(30, 30, 30, 0.8);
+            border-radius: 5px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            border-left: 3px solid #e3b87d;
+        }
+        
+        .note {
+            background-color: rgba(227, 184, 125, 0.1);
+            border-left: 3px solid #e3b87d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(227, 184, 125, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+            </div>
+            <h1>Implementing A* Pathfinding for Smarter Game AI</h1>
+            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span> <span class="tag">Pathfinding</span></div>
+        </div>
+        
+        <p>
+            If you've ever worked on AI for a game, you've likely encountered the challenge of pathfinding. NPCs that move intelligently through complex environments are a necessity in modern games, and the A* (pronounced "A-star") algorithm has become the gold standard for this task. In this post, I'll explain how I implemented A* in my recent game project, share some code snippets, and discuss optimizations.
+        </p>
+        
+        <h2>What Makes A* Special?</h2>
+        
+        <p>
+            Before diving into implementation, it's worth understanding why A* is so widely used. Unlike simpler algorithms like breadth-first search or Dijkstra's algorithm, A* uses a heuristic function to "guess" which paths might lead to the target faster. This makes it significantly more efficient for games where performance is critical.
+        </p>
+        
+        <p>
+            A* combines two values for each potential path:
+        </p>
+        
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+            <li><strong>g(n)</strong>: The exact cost from the starting point to the current position</li>
+            <li><strong>h(n)</strong>: The estimated cost from the current position to the goal</li>
+        </ul>
+        
+        <p>
+            The algorithm always chooses to explore the path with the lowest f(n) = g(n) + h(n) value next, balancing between known costs and potential future costs.
+        </p>
+        
+        <h2>The Core Algorithm in C#</h2>
+        
+        <p>
+            Here's a simplified version of my A* implementation in C#:
+        </p>
+        
+        <pre><code>public List&lt;Node&gt; FindPath(Node start, Node target)
+{
+    var openSet = new PriorityQueue&lt;Node, float&gt;();
+    var closedSet = new HashSet&lt;Node&gt;();
+    var cameFrom = new Dictionary&lt;Node, Node&gt;();
+    
+    var gScore = new Dictionary&lt;Node, float&gt;();
+    var fScore = new Dictionary&lt;Node, float&gt;();
+    
+    openSet.Enqueue(start, 0);
+    gScore[start] = 0;
+    fScore[start] = HeuristicCost(start, target);
+    
+    while (openSet.Count > 0)
+    {
+        var current = openSet.Dequeue();
+        
+        if (current == target)
+            return ReconstructPath(cameFrom, current);
+            
+        closedSet.Add(current);
+        
+        foreach (var neighbor in GetNeighbors(current))
+        {
+            if (closedSet.Contains(neighbor))
+                continue;
+                
+            var tentativeGScore = gScore[current] + DistanceBetween(current, neighbor);
+            
+            if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
+            {
+                cameFrom[neighbor] = current;
+                gScore[neighbor] = tentativeGScore;
+                fScore[neighbor] = gScore[neighbor] + HeuristicCost(neighbor, target);
+                
+                if (!openSet.Contains(neighbor))
+                    openSet.Enqueue(neighbor, fScore[neighbor]);
+            }
+        }
+    }
+    
+    // No path found
+    return new List&lt;Node&gt;();
+}</code></pre>
+
+        <h2>Choosing the Right Heuristic</h2>
+        
+        <p>
+            The heuristic function is crucial to A*'s efficiency. For grid-based games, I've found the Manhattan distance works well for 4-way movement, while the Euclidean distance is better for games that allow diagonal movement:
+        </p>
+        
+        <pre><code>// Manhattan distance (for 4-way movement)
+private float ManhattanDistance(Node a, Node b)
+{
+    return Mathf.Abs(a.X - b.X) + Mathf.Abs(a.Y - b.Y);
+}
+
+// Euclidean distance (for 8-way movement)
+private float EuclideanDistance(Node a, Node b)
+{
+    return Mathf.Sqrt(
+        Mathf.Pow(a.X - b.X, 2) + 
+        Mathf.Pow(a.Y - b.Y, 2)
+    );
+}</code></pre>
+
+        <div class="note">
+            <strong>Performance Tip:</strong> For the Euclidean distance, consider using a squared distance calculation to avoid the costly square root operation. Just make sure to square your comparison values as well!
+        </div>
+        
+        <h2>Handling Different Terrain Types</h2>
+        
+        <p>
+            Real games rarely have uniform terrain. Some areas might be slow to traverse (like swamps), while others might be impassable (like walls). I modified my implementation to account for terrain costs:
+        </p>
+        
+        <pre><code>private float DistanceBetween(Node a, Node b)
+{
+    // Base distance (typically 1.0 for adjacent nodes)
+    float distance = Vector2.Distance(
+        new Vector2(a.X, a.Y), 
+        new Vector2(b.X, b.Y)
+    );
+    
+    // Apply terrain multiplier (e.g., 2.0 for rough terrain)
+    return distance * b.TerrainCostMultiplier;
+}</code></pre>
+
+        <h2>Optimization Techniques</h2>
+        
+        <p>
+            While A* is efficient, it can still become a bottleneck in games with many AI units. Here are some optimizations I've implemented:
+        </p>
+        
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+            <li><strong>Path caching:</strong> Store recently calculated paths</li>
+            <li><strong>Grid simplification:</strong> Use larger nodes for distant areas</li>
+            <li><strong>Path request batching:</strong> Group similar path requests</li>
+            <li><strong>Threading:</strong> Move pathfinding calculations off the main thread</li>
+        </ul>
+        
+        <p>
+            The threading approach has been particularly effective. By moving pathfinding to a separate thread, the main game loop stays responsive even when calculating complex paths:
+        </p>
+        
+        <pre><code>public void RequestPath(Node start, Node target, Action&lt;List&lt;Node&gt;&gt; callback)
+{
+    lock (_pathRequestQueue)
+    {
+        _pathRequestQueue.Enqueue(new PathRequest(start, target, callback));
+    }
+    
+    if (!_isProcessingPath)
+    {
+        _isProcessingPath = true;
+        ThreadPool.QueueUserWorkItem(ProcessNextPathRequest);
+    }
+}</code></pre>
+
+        <h2>Conclusion</h2>
+        
+        <p>
+            A* pathfinding is a powerful tool in a game programmer's toolkit. While the basic algorithm is straightforward, the real art lies in tuning it for your specific game's needs. By choosing appropriate heuristics, handling terrain costs, and implementing optimization techniques, you can create NPCs that navigate intelligently without draining your game's performance.
+        </p>
+        
+        <p>
+            In my next post, I'll demonstrate how to extend this system to handle dynamic obstacles that appear and disappear during gameplay.
+        </p>
+        
+        <div class="navigation-buttons">
+            <a href="blog.html" class="back-link">← All Blog Posts</a>
+            <a href="blog-post2.html" class="back-link">Next Post: Optimizing Entity Component Systems →</a>
+        </div>
+    </div>
+
+    <script>
+        // Background particles script
+        (function() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match window
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speed = Math.random() * 0.5 + 0.1;
+                    this.angle = Math.random() * 360;
+                    this.color = Math.random() > 0.85 ? 
+                                 'rgba(227, 184, 125, ' + (Math.random() * 0.35 + 0.1) + ')' : 
+                                 'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+                
+                update() {
+                    this.x += Math.cos(this.angle * Math.PI / 180) * this.speed;
+                    this.y += Math.sin(this.angle * Math.PI / 180) * this.speed;
+                    
+                    // Change angle slightly for meandering effect
+                    this.angle += Math.random() * 2 - 1;
+                    
+                    // Reset particles that move off-screen
+                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+                        this.reset();
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+            
+            // Create particles array
+            const particlesArray = [];
+            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive particle count
+            
+            for (let i = 0; i < particleCount; i++) {
+                particlesArray.push(new Particle());
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        })();
+    </script>
+</body>
+</html>
