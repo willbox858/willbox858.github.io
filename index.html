@@ -40,7 +40,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             padding: 40px;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             text-align: center;
             transition: transform 0.3s ease;
@@ -53,17 +53,15 @@
         
         h1 {
             font-size: 28px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #e3b87d;
+            text-align: left;
         }
         
         p {
             font-size: 18px;
             color: #d0d0d0;
             margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
         
         .container {
@@ -79,9 +77,10 @@
         
         .signature {
             font-style: italic;
-            margin-top: 10px;
-            margin-bottom: 30px;
+            margin-top: 5px;
+            margin-bottom: 15px;
             color: #a98d6d;
+            text-align: left;
         }
         
         .social-link {
@@ -105,6 +104,7 @@
         /* Navigation styles */
         .nav {
             margin-bottom: 30px;
+            text-align: center;
         }
         
         .nav-link {
@@ -122,10 +122,19 @@
         }
         
         /* Headshot styles */
+        .profile-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 30px;
+        }
+        
         .headshot-container {
             width: 180px;
             height: 180px;
-            margin: 0 auto 25px;
+            flex-shrink: 0;
             position: relative;
         }
         
@@ -161,6 +170,11 @@
             object-fit: cover;
         }
         
+        .intro-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+        
         /* About section */
         .about-section {
             margin-bottom: 30px;
@@ -174,7 +188,6 @@
             font-size: 22px;
             margin-bottom: 15px;
             color: #e3b87d;
-            text-align: center;
         }
         
         /* Social media links */
@@ -198,6 +211,23 @@
                 box-shadow: 0 0 0 0 rgba(227, 184, 125, 0);
             }
         }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            h1, .signature, .intro-text p {
+                text-align: center;
+            }
+            
+            .headshot-container {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -208,30 +238,38 @@
             <a href="blog.html" class="nav-link">Blog</a>
         </div>
         
-        <div class="headshot-container">
-            <div class="headshot">
-                <!-- Replace this comment with your actual image: -->
-                <img src="images/1713923639197.jpg" alt="Your Name">
-                Your Photo Here
+        <div class="profile-container">
+            <div class="headshot-container">
+                <div class="headshot">
+                    <!-- Replace this comment with your actual image: -->
+                    <img src="images/1713923639197.jpg" alt="Your Name">
+                    Your Photo Here
+                </div>
+                <div class="headshot-outline"></div>
             </div>
-            <div class="headshot-outline"></div>
-        </div>
-        
-        <h1>William Box</h1>
-        <p class="signature">Game Programmer & AI Developer</p>
-        
-        <div class="about-section">
-            <h2>About Me</h2>
-            <p>
-                Hello! I'm a game programmer with an interest in AI systems and gameplay mechanics. 
+            
+            <div class="intro-text">
+                <h1>William Box</h1>
+                <p class="signature">Game Programmer & AI Developer</p>
+                <p>
+                    Hello! I'm a game programmer with an interest in AI systems and gameplay mechanics. 
                 I have experience in both Unity and Unreal Engine, and really enjoy finding novel 
                 solutions to complex technical problems. This has pushed me to always be looking at
                 new technologies, as well as driving me into the games industry, where I hope to help
                 cool systems to help build believable and enjoyable world.
+                </p>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2>About My Work</h2>
+            <p>
+                I've recently graduated from champlain college with a bachelors in Game Programming (with a math minor), 
+                and while I haven't found a role within games, I'll be keeping my skills sharp by regularly adding new projects to here. 
             </p>
             <p>
-                I'm currently working on expanding this portfolio site. In the meantime, check out my blog 
-                for technical articles on projects I'm working on or connect with me on social media.
+                In addition to my technical projects I'm currently working on expanding this site as well. I hope you take 
+                a chance to check out my blog, read some technical articles for projects I'm working on, and connect with me on social media!
             </p>
         </div>
         
