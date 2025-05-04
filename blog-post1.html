@@ -177,166 +177,30 @@
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="blog.html" class="nav-link">Blog</a>
             </div>
-            <h1>Implementing A* Pathfinding for Smarter Game AI</h1>
-            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span> <span class="tag">Pathfinding</span></div>
+            <h1>Implementing GOAP For AI Agents</h1>
+            <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span></div>
         </div>
         
         <p>
-            If you've ever worked on AI for a game, you've likely encountered the challenge of pathfinding. NPCs that move intelligently through complex environments are a necessity in modern games, and the A* (pronounced "A-star") algorithm has become the gold standard for this task. In this post, I'll explain how I implemented A* in my recent game project, share some code snippets, and discuss optimizations.
-        </p>
+            AI agents are the spice that bring many games to life. They provide a reactive challenge to players, forcing them to be adaptive and smart in how they pick fights. In the best case scenarios at least. At their worst, enemy AI can be boring and actually detract from a game's fun. So, how do we build fun, reactive, and intelligent AI for out games?
+        </p>       
         
-        <h2>What Makes A* Special?</h2>
-        
-        <p>
-            Before diving into implementation, it's worth understanding why A* is so widely used. Unlike simpler algorithms like breadth-first search or Dijkstra's algorithm, A* uses a heuristic function to "guess" which paths might lead to the target faster. This makes it significantly more efficient for games where performance is critical.
-        </p>
+        <h2>What's a GOAP?</h2>
         
         <p>
-            A* combines two values for each potential path:
+            GOAP is an acronym that stands for Goal Oriented Action Planning, and it's that last word that makes GOAP so interesting, even some 20 years after the technology was unvealed for the game F.E.A.R. 
         </p>
         
-        <ul style="margin-left: 20px; margin-bottom: 20px;">
-            <li><strong>g(n)</strong>: The exact cost from the starting point to the current position</li>
-            <li><strong>h(n)</strong>: The estimated cost from the current position to the goal</li>
-        </ul>
+        <h2>Why is Planning Special?</h2>
         
         <p>
-            The algorithm always chooses to explore the path with the lowest f(n) = g(n) + h(n) value next, balancing between known costs and potential future costs.
+            Unlike GOAP, most AI systems are actually incapable of forming plans. This is because they're built using what are known as "Behavior Trees." These systems utilize fixed connections between the actions an agent can perform in order to accomplish it's goals, these action / goal pairings are also called Behaviors. As an easy example, let's say we have an AI agent with a sword. When it sees the player, it will likely trigger it's "Attack_With_Melee" behavior, which tells the agent to run up to the player and hit them with their sword. Within a Behavior Tree, these are fixed. So, unless a different behavior is triggered, that exact sequence of actions is what the AI will do.
         </p>
-        
-        <h2>The Core Algorithm in C#</h2>
-        
-        <p>
-            Here's a simplified version of my A* implementation in C#:
-        </p>
-        
-        <pre><code>public List&lt;Node&gt; FindPath(Node start, Node target)
-{
-    var openSet = new PriorityQueue&lt;Node, float&gt;();
-    var closedSet = new HashSet&lt;Node&gt;();
-    var cameFrom = new Dictionary&lt;Node, Node&gt;();
-    
-    var gScore = new Dictionary&lt;Node, float&gt;();
-    var fScore = new Dictionary&lt;Node, float&gt;();
-    
-    openSet.Enqueue(start, 0);
-    gScore[start] = 0;
-    fScore[start] = HeuristicCost(start, target);
-    
-    while (openSet.Count > 0)
-    {
-        var current = openSet.Dequeue();
-        
-        if (current == target)
-            return ReconstructPath(cameFrom, current);
-            
-        closedSet.Add(current);
-        
-        foreach (var neighbor in GetNeighbors(current))
-        {
-            if (closedSet.Contains(neighbor))
-                continue;
-                
-            var tentativeGScore = gScore[current] + DistanceBetween(current, neighbor);
-            
-            if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
-            {
-                cameFrom[neighbor] = current;
-                gScore[neighbor] = tentativeGScore;
-                fScore[neighbor] = gScore[neighbor] + HeuristicCost(neighbor, target);
-                
-                if (!openSet.Contains(neighbor))
-                    openSet.Enqueue(neighbor, fScore[neighbor]);
-            }
-        }
-    }
-    
-    // No path found
-    return new List&lt;Node&gt;();
-}</code></pre>
 
-        <h2>Choosing the Right Heuristic</h2>
+        <h2>This is where Planning comes in.</h2>
         
         <p>
-            The heuristic function is crucial to A*'s efficiency. For grid-based games, I've found the Manhattan distance works well for 4-way movement, while the Euclidean distance is better for games that allow diagonal movement:
-        </p>
-        
-        <pre><code>// Manhattan distance (for 4-way movement)
-private float ManhattanDistance(Node a, Node b)
-{
-    return Mathf.Abs(a.X - b.X) + Mathf.Abs(a.Y - b.Y);
-}
-
-// Euclidean distance (for 8-way movement)
-private float EuclideanDistance(Node a, Node b)
-{
-    return Mathf.Sqrt(
-        Mathf.Pow(a.X - b.X, 2) + 
-        Mathf.Pow(a.Y - b.Y, 2)
-    );
-}</code></pre>
-
-        <div class="note">
-            <strong>Performance Tip:</strong> For the Euclidean distance, consider using a squared distance calculation to avoid the costly square root operation. Just make sure to square your comparison values as well!
-        </div>
-        
-        <h2>Handling Different Terrain Types</h2>
-        
-        <p>
-            Real games rarely have uniform terrain. Some areas might be slow to traverse (like swamps), while others might be impassable (like walls). I modified my implementation to account for terrain costs:
-        </p>
-        
-        <pre><code>private float DistanceBetween(Node a, Node b)
-{
-    // Base distance (typically 1.0 for adjacent nodes)
-    float distance = Vector2.Distance(
-        new Vector2(a.X, a.Y), 
-        new Vector2(b.X, b.Y)
-    );
-    
-    // Apply terrain multiplier (e.g., 2.0 for rough terrain)
-    return distance * b.TerrainCostMultiplier;
-}</code></pre>
-
-        <h2>Optimization Techniques</h2>
-        
-        <p>
-            While A* is efficient, it can still become a bottleneck in games with many AI units. Here are some optimizations I've implemented:
-        </p>
-        
-        <ul style="margin-left: 20px; margin-bottom: 20px;">
-            <li><strong>Path caching:</strong> Store recently calculated paths</li>
-            <li><strong>Grid simplification:</strong> Use larger nodes for distant areas</li>
-            <li><strong>Path request batching:</strong> Group similar path requests</li>
-            <li><strong>Threading:</strong> Move pathfinding calculations off the main thread</li>
-        </ul>
-        
-        <p>
-            The threading approach has been particularly effective. By moving pathfinding to a separate thread, the main game loop stays responsive even when calculating complex paths:
-        </p>
-        
-        <pre><code>public void RequestPath(Node start, Node target, Action&lt;List&lt;Node&gt;&gt; callback)
-{
-    lock (_pathRequestQueue)
-    {
-        _pathRequestQueue.Enqueue(new PathRequest(start, target, callback));
-    }
-    
-    if (!_isProcessingPath)
-    {
-        _isProcessingPath = true;
-        ThreadPool.QueueUserWorkItem(ProcessNextPathRequest);
-    }
-}</code></pre>
-
-        <h2>Conclusion</h2>
-        
-        <p>
-            A* pathfinding is a powerful tool in a game programmer's toolkit. While the basic algorithm is straightforward, the real art lies in tuning it for your specific game's needs. By choosing appropriate heuristics, handling terrain costs, and implementing optimization techniques, you can create NPCs that navigate intelligently without draining your game's performance.
-        </p>
-        
-        <p>
-            In my next post, I'll demonstrate how to extend this system to handle dynamic obstacles that appear and disappear during gameplay.
+            GOAP on the other hand, is capable of planning, and is actually one of a variety of AI systems known as "planning systems." When a GOAP agent decides to do something, it goes through several steps. First, it determines what it needs to do (it finds a goal). Then, the agent looks at what is supposed to happen when it reaches it's goal, and compares that against what things are like currently (it looks at the world-state, and compares it to the current world-state). Finally, the AI then looks over all the things it can do (actions), and builds a plan that uses it's actions to incrementally accomplish it's goal. Kind of like a person! What's really cool about this though, it that it means agents have totally free reign to accomplish it's goals, within the limits of the software obviously.
         </p>
         
         <div class="navigation-buttons">
