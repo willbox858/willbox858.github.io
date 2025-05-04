@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Programmer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Portfolio Coming Soon</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Removed pulse container styles */
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        
         /* Background canvas for particles */
         #particles-canvas {
             position: fixed;
@@ -17,160 +37,84 @@
             z-index: -1;
         }
         
-        /* Override some styles for better contrast with particle background */
-        body {
-            background-color: #1a1a1a;
-        }
-        
-        .banner {
-            background-color: rgba(0, 153, 255, 0.9);
-            backdrop-filter: blur(5px);
-        }
-        
-        main {
-            background-color: rgba(248, 249, 250, 0.95);
+        .container {
+            background-color: rgba(42, 42, 42, 0.85);
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(3px);
-            padding: 30px;
-            margin-top: 20px;
-        }
-        
-        footer {
-            background-color: rgba(34, 34, 34, 0.95);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            transition: transform 0.3s ease;
             backdrop-filter: blur(5px);
         }
         
-        .project-card, .skill-category, .cta-buttons .btn {
-            backdrop-filter: blur(3px);
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #e3b87d;
+        }
+        
+        p {
+            font-size: 18px;
+            color: #d0d0d0;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        h1, p, .signature {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Removed pulse animation styles */
+        
+        .signature {
+            font-style: italic;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            color: #a98d6d;
+        }
+        
+        .social-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #333333;
+            color: #e3b87d;
+            text-decoration: none;
+            border-radius: 4px;
+            border: 1px solid #e3b87d;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .social-link:hover {
+            background-color: #e3b87d;
+            color: #2a2a2a;
         }
     </style>
 </head>
 <body>
     <canvas id="particles-canvas"></canvas>
-    
-    <header>
-        <div class="banner">
-            <div class="logo">
-                <h1>Game Programmer</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h2>Game AI Developer & Programmer</h2>
-                <p>Creating intelligent systems and gameplay mechanics for immersive gaming experiences</p>
-                <div class="cta-buttons">
-                    <a href="projects.html" class="btn primary">View Projects</a>
-                    <a href="contact.html" class="btn secondary">Get in Touch</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="skills-section">
-            <h2>Skills & Technologies</h2>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <ul class="skill-list">
-                        <li><span class="skill-name">C#</span><span class="skill-bar expert"></span></li>
-                        <li><span class="skill-name">C++</span><span class="skill-bar advanced"></span></li>
-                        <li><span class="skill-name">Python</span><span class="skill-bar intermediate"></span></li>
-                        <li><span class="skill-name">JavaScript</span><span class="skill-bar intermediate"></span></li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>Game Engines</h3>
-                    <ul class="skill-list">
-                        <li><span class="skill-name">Unity</span><span class="skill-bar expert"></span></li>
-                        <li><span class="skill-name">Unreal</span><span class="skill-bar intermediate"></span></li>
-                        <li><span class="skill-name">Custom Engines</span><span class="skill-bar advanced"></span></li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>AI Techniques</h3>
-                    <ul class="skill-list">
-                        <li><span class="skill-name">Pathfinding</span><span class="skill-bar expert"></span></li>
-                        <li><span class="skill-name">Behavior Trees</span><span class="skill-bar expert"></span></li>
-                        <li><span class="skill-name">Machine Learning</span><span class="skill-bar intermediate"></span></li>
-                        <li><span class="skill-name">Decision Making</span><span class="skill-bar advanced"></span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="projects-section">
-            <h2>Featured Projects</h2>
-            
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="img/project1.jpg" alt="Project 1">
-                </div>
-                <div class="project-info">
-                    <h3>AI-Driven Strategy Game</h3>
-                    <ul class="project-highlights">
-                        <li>Implemented advanced pathfinding for unit movement across dynamic terrain</li>
-                        <li>Designed and coded complex behavior trees for varied enemy AI strategies</li>
-                        <li>Optimized AI systems to handle 100+ agents simultaneously</li>
-                        <li>Created tool for designers to adjust AI parameters without coding</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-badge">Unity</span>
-                        <span class="tech-badge">C#</span>
-                        <span class="tech-badge">AI Systems</span>
-                    </div>
-                    <a href="projects/strategy-game.html" class="btn small">View Details</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="img/project2.jpg" alt="Project 2">
-                </div>
-                <div class="project-info">
-                    <h3>Physics-Based Puzzle Game</h3>
-                    <ul class="project-highlights">
-                        <li>Developed custom physics system for realistic object interactions</li>
-                        <li>Built adaptive difficulty system based on player performance metrics</li>
-                        <li>Implemented shader-based visual effects for puzzle elements</li>
-                        <li>Created level editor for rapid prototyping and iteration</li>
-                    </ul>
-                    <div class="project-tech">
-                        <span class="tech-badge">C++</span>
-                        <span class="tech-badge">Custom Engine</span>
-                        <span class="tech-badge">GLSL</span>
-                    </div>
-                    <a href="projects/puzzle-game.html" class="btn small">View Details</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/williambox92064/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
-            </div>
-            <p>&copy; 2025 Game Programmer Portfolio. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="container">
+        <h1>Thank you for checking my portfolio</h1>
+        <p>We're still getting things set up here. Please check back soon to see my work and projects.</p>
+        <div class="signature">- Coming Soon -</div>
+        <a href="https://www.linkedin.com/in/williambox92064/" class="social-link" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+    </div>
 
     <script>
+        // Pulse animation has been removed
+        const container = document.querySelector('.container');
+
         // Background particles script
         (function() {
             const canvas = document.getElementById('particles-canvas');
@@ -198,8 +142,8 @@
                     this.speed = Math.random() * 0.5 + 0.1;
                     this.angle = Math.random() * 360;
                     this.color = Math.random() > 0.85 ? 
-                                'rgba(0, 153, 255, ' + (Math.random() * 0.35 + 0.1) + ')' : 
-                                'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
+                                 'rgba(227, 184, 125, ' + (Math.random() * 0.35 + 0.1) + ')' : 
+                                 'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
                     this.opacity = Math.random() * 0.5 + 0.1;
                 }
                 
@@ -247,6 +191,5 @@
             animate();
         })();
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
