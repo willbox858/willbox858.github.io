@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Game Programmer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <div class="logo">
+                <h1>Game Programmer</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-header">
+            <h1>Get In Touch</h1>
+            <p>Interested in collaborating, hiring, or just want to say hello? I'd love to hear from you!</p>
+        </section>
+
+        <section class="contact-container">
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p>Feel free to reach out through any of these channels or use the contact form. I typically respond within 1-2 business days.</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p><a href="mailto:hello@gameprogrammer.dev">hello@gameprogrammer.dev</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>LinkedIn</h3>
+                            <p><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>GitHub</h3>
+                            <p><a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Twitter</h3>
+                            <p><a href="https://twitter.com/yourhandle" target="_blank">@yourhandle</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="availability-indicator">
+                    <div class="status-dot available"></div>
+                    <p>Currently available for freelance projects and job opportunities</p>
+                </div>
+            </div>
+            
+            <div class="contact-form-container">
+                <h2>Send Me a Message</h2>
+                <form id="contact-form" action="https://formspree.io/f/mjkwydyw" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purpose">Purpose</label>
+                        <select id="purpose" name="purpose">
+                            <option value="job-opportunity">Job Opportunity</option>
+                            <option value="freelance-project">Freelance Project</option>
+                            <option value="collaboration">Collaboration</option>
+                            <option value="question">Question</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <!-- Honeypot field for anti-spam -->
+                    <div class="form-group honeypot">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website">
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn primary">Send Message</button>
+                    </div>
+                </form>
+                
+                <div id="form-success" class="form-message success">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Your message has been sent successfully. I'll get back to you soon!</p>
+                </div>
+                
+                <div id="form-error" class="form-message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>There was an error sending your message. Please try again later.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>&copy; 2025 Game Programmer Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Contact form handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            const formSuccess = document.getElementById('form-success');
+            const formError = document.getElementById('form-error');
+            
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Check honeypot field (anti-spam)
+                    const honeypot = document.getElementById('website').value;
+                    if(honeypot) {
+                        return; // Bot detected, silently ignore
+                    }
+                    
+                    // In a real implementation, you would send the form data to your form handler
+                    // For this demo, we'll simulate a successful submission
+                    
+                    // Hide the form and show success message
+                    contactForm.style.display = 'none';
+                    formSuccess.style.display = 'flex';
+                    
+                    // You would normally use fetch or XMLHttpRequest here to submit the form
+                    // Example with Formspree:
+                    /*
+                    fetch(contactForm.action, {
+                        method: 'POST',
+                        body: new FormData(contactForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if(response.ok) {
+                            contactForm.style.display = 'none';
+                            formSuccess.style.display = 'flex';
+                        } else {
+                            formError.style.display = 'flex';
+                        }
+                    })
+                    .catch(error => {
+                        formError.style.display = 'flex';
+                    });
+                    */
+                });
+            }
+        });
+    </script>
+</body>
+</html>
