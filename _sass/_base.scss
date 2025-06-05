@@ -446,3 +446,40 @@ p {
 .back-link:hover {
     color: #e3b87d;
 }
+
+/* Blog post content styles */
+.gif-container {
+    margin: 30px 0;
+    text-align: center;
+    background-color: rgba(30, 30, 30, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px dashed #a98d6d;
+}
+
+.gif-container img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.gif-caption {
+    font-style: italic;
+    color: #a98d6d;
+    font-size: 14px;
+    text-align: center;
+}
+
+pre {
+    background-color: rgba(30, 30, 30, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 20px 0;
+    border-left: 3px solid #e3b87d;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    color: #d4d4d4;
+}
