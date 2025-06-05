@@ -70,7 +70,7 @@ Here's the thing about GOAP - it's super powerful, but it can also be a total ni
 This is where good debug tools become absolutely essential. Without them, you're basically flying blind, trying to guess why your carefully crafted AI is running in circles or staring at walls instead of doing something useful. Below is a simple debugger I made for my own GOAP implementation, and while it isn't much, something is way better than nothing when dealing with systems like this.
 
 <div class="gif-container">
-    <img src="images/goap-debug-demo.gif" alt="GOAP Agent with Debug UI">
+    <img src="/images/goap-debug-demo.gif" alt="GOAP Agent with Debug UI">
     <p class="gif-caption">GOAP agent navigating its environment with the debug UI showing its current goal, action, and beliefs. Notice how the beliefs change as the agent runs around and does his thing.</p>
 </div>
 
