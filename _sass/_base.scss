@@ -470,6 +470,21 @@ p {
     text-align: center;
 }
 
+/* Force code blocks to be left-aligned - AGGRESSIVE VERSION */
+pre,
+.highlight,
+.highlighter-rouge,
+.language-plaintext,
+.language-csharp,
+.post-content pre,
+.post-content .highlight,
+.post-content .highlight pre,
+.post-content .highlighter-rouge,
+.post-content .highlighter-rouge pre {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
 pre {
     background-color: rgba(30, 30, 30, 0.8);
     padding: 15px;
@@ -478,17 +493,26 @@ pre {
     margin: 20px 0;
     border-left: 3px solid #e3b87d;
     text-align: left !important;
+    direction: ltr !important;
 }
 
-.post-content pre {
+.highlight {
     text-align: left !important;
+    direction: ltr !important;
 }
 
 .highlight pre {
     text-align: left !important;
+    direction: ltr !important;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
 }
 
 code {
     font-family: 'Courier New', Courier, monospace;
     color: #d4d4d4;
+    text-align: left !important;
+    direction: ltr !important;
 }
