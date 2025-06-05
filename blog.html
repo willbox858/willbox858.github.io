@@ -1,327 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Game Dev Blog</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        /* Background canvas for particles */
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .container {
-            background-color: rgba(42, 42, 42, 0.85);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 800px;
-            margin: 40px auto;
-            backdrop-filter: blur(5px);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #e3b87d;
-        }
-        
-        h2 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #e3b87d;
-        }
-        
-        h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #d0d0d0;
-        }
-        
-        p {
-            font-size: 16px;
-            color: #d0d0d0;
-            margin-bottom: 20px;
-        }
-        
-        /* Navigation styles */
-        .nav {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .nav-link {
-            display: inline-block;
-            padding: 6px 12px;
-            margin: 0 5px;
-            color: #e3b87d;
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            border-bottom: 2px solid #e3b87d;
-        }
-        
-        /* Blog post styles */
-        .blog-post {
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(227, 184, 125, 0.3);
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-        }
+---
+layout: default
+title: "Blog"
+---
 
-        /* Preview image container */
-        .post-preview-image {
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
-            position: relative;
-        }
+<div class="header">
+    <h1>My Game Development Blog</h1>
+    <p>Exploring game programming concepts, AI development, and all sorts of other technologies</p>
+</div>
 
-        /* Gold border around the image */
-        .preview-image-outline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 2px solid #e3b87d;
-            border-radius: 50%;
-        }
-
-        /* Inner container for the image */
-        .preview-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center;
-            overflow: hidden;
-            background-color: #333333;
-        }
-
-        /* The actual image styling */
-        .preview-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Content container */
-        .post-content {
-            flex-grow: 1;
-        }
-
-        /* Responsive layout for mobile */
-        @media (max-width: 600px) {
-            .blog-post {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
-            .post-preview-image {
-                margin-bottom: 15px;
-            }
-            
-            .post-meta {
-                text-align: center;
-            }
-        }
-
-        .blog-post:last-child {
-            border-bottom: none;
-        }
-        
-        .post-meta {
-            font-size: 14px;
-            color: #a98d6d;
-            margin-bottom: 15px;
-        }
-        
-        .tag {
-            display: inline-block;
-            font-size: 12px;
-            padding: 3px 8px;
-            margin-right: 5px;
-            background-color: rgba(169, 141, 109, 0.2);
-            border: 1px solid #a98d6d;
-            border-radius: 4px;
-            color: #a98d6d;
-        }
-        
-        .read-more {
-            display: inline-block;
-            padding: 6px 12px;
-            margin-top: 10px;
-            background-color: #333333;
-            color: #e3b87d;
-            text-decoration: none;
-            border-radius: 4px;
-            border: 1px solid #e3b87d;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .read-more:hover {
-            background-color: #e3b87d;
-            color: #2a2a2a;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: #a98d6d;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .back-link:hover {
-            color: #e3b87d;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="particles-canvas"></canvas>
-    
-    <div class="container">
-        <div class="header">
-            <div class="nav">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="blog.html" class="nav-link active">Blog</a>
-                <a href="files/resume.pdf" class="nav-link" target="_blank" rel="noopener noreferrer">Resume</a>
-            </div>
-            <h1>My Game Development Blog</h1>
-            <p>Exploring game programming concepts, AI development, and all sorts of other technologies</p>
+{% for post in site.posts %}
+<div class="blog-post">
+    <div class="post-preview-image">
+        <div class="preview-image">
+            {% if post.image %}
+                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+            {% else %}
+                <img src="images/goap-debug-demo.gif" alt="{{ post.title }}">
+            {% endif %}
         </div>
-        
-        <div class="blog-post">
-            <div class="post-preview-image">
-                <div class="preview-image">
-                    <img src="images/goap-debug-demo.gif" alt="GOAP Debug Visualization">
-                </div>
-                <div class="preview-image-outline"></div>
-            </div>
-            <div class="post-content">
-                <h2><a href="blog-post1.html" style="color: inherit; text-decoration: none;">Implementing GOAP For AI Agents</a></h2>
-                <div class="post-meta">May 2, 2025 · 5 min read · <span class="tag">Game AI</span></div>
-                <p>
-                    GOAP is most widely known for it's use in the F.E.A.R series, where (when combined with clever level design and audio queues)
-                    it became famous for having the "smartest AI in games." But, the interesting things about GOAP extends to outside the realm
-                    of games. In here, we'll be discussing GOAP, Behavior Trees, what they do, why GOAP is so neat, and take a look at my GOAP 
-                    implementation in Unity
-                </p>
-                <a href="blog-post1.html" class="read-more">Read More</a>
-            </div>
+        <div class="preview-image-outline"></div>
+    </div>
+    <div class="post-content">
+        <h2><a href="{{ post.url | relative_url }}" style="color: inherit; text-decoration: none;">{{ post.title }}</a></h2>
+        <div class="post-meta">
+            {{ post.date | date: "%B %d, %Y" }} · 
+            {% if post.read_time %}{{ post.read_time }}{% else %}5 min read{% endif %} · 
+            {% for tag in post.tags %}
+                <span class="tag">{{ tag }}</span>
+            {% endfor %}
         </div>
-
-    <script>
-        // Background particles script
-        (function() {
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Set canvas dimensions to match window
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-            
-            // Particle class
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speed = Math.random() * 0.5 + 0.1;
-                    this.angle = Math.random() * 360;
-                    this.color = Math.random() > 0.85 ? 
-                                 'rgba(227, 184, 125, ' + (Math.random() * 0.35 + 0.1) + ')' : 
-                                 'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
-                    this.opacity = Math.random() * 0.5 + 0.1;
-                }
-                
-                update() {
-                    this.x += Math.cos(this.angle * Math.PI / 180) * this.speed;
-                    this.y += Math.sin(this.angle * Math.PI / 180) * this.speed;
-                    
-                    // Change angle slightly for meandering effect
-                    this.angle += Math.random() * 2 - 1;
-                    
-                    // Reset particles that move off-screen
-                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
-                        this.reset();
-                    }
-                }
-                
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                }
-            }
-            
-            // Create particles array
-            const particlesArray = [];
-            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive particle count
-            
-            for (let i = 0; i < particleCount; i++) {
-                particlesArray.push(new Particle());
-            }
-            
-            // Animation loop
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                for (let i = 0; i < particlesArray.length; i++) {
-                    particlesArray[i].update();
-                    particlesArray[i].draw();
-                }
-                
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-        })();
-    </script>
-</body>
-</html>
+        <p>{{ post.excerpt | strip_html | truncate: 150 }}</p>
+        <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
+    </div>
+</div>
+{% endfor %}
