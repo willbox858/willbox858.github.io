@@ -1,0 +1,450 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+// Copy your existing base styles here
+
+// Index.html styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background canvas for particles */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    background-color: rgba(42, 42, 42, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #e3b87d;
+    text-align: left;
+}
+
+p {
+    font-size: 18px;
+    color: #d0d0d0;
+    margin-bottom: 20px;
+}
+
+.container {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+h1, p, .signature {
+    position: relative;
+    z-index: 2;
+}
+
+.signature {
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #a98d6d;
+    text-align: left;
+}
+
+.social-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #333333;
+    color: #e3b87d;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #e3b87d;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    margin: 0 5px 10px 5px;
+}
+
+.social-link:hover {
+    background-color: #e3b87d;
+    color: #2a2a2a;
+}
+
+/* Navigation styles */
+.nav {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 5px;
+    color: #e3b87d;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    border-bottom: 2px solid #e3b87d;
+}
+
+/* Headshot styles */
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 30px;
+}
+
+.headshot-container {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.headshot-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid #e3b87d;
+    border-radius: 50%;
+    animation: pulse 3s infinite;
+}
+
+.headshot {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+    background-color: #333333; /* Placeholder color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a98d6d;
+    font-size: 14px;
+}
+
+.headshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.intro-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* About section */
+.about-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 6px;
+    background-color: rgba(30, 30, 30, 0.5);
+    text-align: left;
+}
+
+.about-section h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #e3b87d;
+}
+
+/* Social media links */
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(227, 184, 125, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(227, 184, 125, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(227, 184, 125, 0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    h1, .signature, .intro-text p {
+        text-align: center;
+    }
+    
+    .headshot-container {
+        margin-bottom: 20px;
+    }
+}
+
+//blog.html styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background canvas for particles */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    background-color: rgba(42, 42, 42, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    max-width: 800px;
+    margin: 40px auto;
+    backdrop-filter: blur(5px);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #e3b87d;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #e3b87d;
+}
+
+h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #d0d0d0;
+}
+
+p {
+    font-size: 16px;
+    color: #d0d0d0;
+    margin-bottom: 20px;
+}
+
+/* Navigation styles */
+.nav {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0 5px;
+    color: #e3b87d;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    border-bottom: 2px solid #e3b87d;
+}
+
+/* Blog post styles */
+.blog-post {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(227, 184, 125, 0.3);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Preview image container */
+.post-preview-image {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Gold border around the image */
+.preview-image-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #e3b87d;
+    border-radius: 50%;
+}
+
+/* Inner container for the image */
+.preview-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+/* The actual image styling */
+.preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Content container */
+.post-content {
+    flex-grow: 1;
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 600px) {
+    .blog-post {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .post-preview-image {
+        margin-bottom: 15px;
+    }
+    
+    .post-meta {
+        text-align: center;
+    }
+}
+
+.blog-post:last-child {
+    border-bottom: none;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: #a98d6d;
+    margin-bottom: 15px;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 8px;
+    margin-right: 5px;
+    background-color: rgba(169, 141, 109, 0.2);
+    border: 1px solid #a98d6d;
+    border-radius: 4px;
+    color: #a98d6d;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top: 10px;
+    background-color: #333333;
+    color: #e3b87d;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #e3b87d;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.read-more:hover {
+    background-color: #e3b87d;
+    color: #2a2a2a;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #a98d6d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #e3b87d;
+}

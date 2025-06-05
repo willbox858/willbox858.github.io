@@ -1,0 +1,5 @@
+<div class="nav">
+    <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
+    <a href="{{ '/blog.html' | relative_url }}" class="nav-link {% if page.url contains 'blog' %}active{% endif %}">Blog</a>
+    <a href="{{ '/files/resume.pdf' | relative_url }}" class="nav-link" target="_blank" rel="noopener noreferrer">Resume</a>
+</div>

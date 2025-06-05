@@ -1,0 +1,77 @@
+<script>
+// Background particles script
+(function() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match window
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speed = Math.random() * 0.5 + 0.1;
+                    this.angle = Math.random() * 360;
+                    this.color = Math.random() > 0.85 ? 
+                                 'rgba(227, 184, 125, ' + (Math.random() * 0.35 + 0.1) + ')' : 
+                                 'rgba(150, 150, 150, ' + (Math.random() * 0.15 + 0.05) + ')';
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+                
+                update() {
+                    this.x += Math.cos(this.angle * Math.PI / 180) * this.speed;
+                    this.y += Math.sin(this.angle * Math.PI / 180) * this.speed;
+                    
+                    // Change angle slightly for meandering effect
+                    this.angle += Math.random() * 2 - 1;
+                    
+                    // Reset particles that move off-screen
+                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+                        this.reset();
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+            
+            // Create particles array
+            const particlesArray = [];
+            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive particle count
+            
+            for (let i = 0; i < particleCount; i++) {
+                particlesArray.push(new Particle());
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        })();
+</script>
